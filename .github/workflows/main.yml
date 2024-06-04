@@ -33,9 +33,12 @@ jobs:
           cat yylunbo.m3u huyayqk.m3u douyuyqk.m3u > merged_file.m3u
           
       - name: Commit changes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          DATE=$(date +%Y-%m-%d)
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          git add merged_file.m3u
-          git commit -m "Added $DATE"
-          git push
+          git add merged_file.txt
+          git commit -m "Add merged file on $DATE"
+          git push origin HEAD
