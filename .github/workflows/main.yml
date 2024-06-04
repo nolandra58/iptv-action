@@ -37,5 +37,5 @@ jobs:
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
           git add merged_file.m3u
-          git commit -m "$(DATE)"
+          git commit -m "Added $DATE"
           git push
