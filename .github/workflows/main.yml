@@ -1,4 +1,4 @@
-name: Download and Commit Files
+name: get3-iptv
 
 on:
   schedule:
