@@ -1,0 +1,40 @@
+name: Download and Commit Files
+
+on:
+  schedule:
+    - cron: 0 2 * * *
+
+jobs:
+  download_and_commit:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      
+      - name: Run Docker container
+        run: |
+          docker run -d --restart unless-stopped --privileged=true -p 127.0.0.1:35455:35455 --name allinone youshandefeiyang/allinone
+          sleep 5 # 等待容器启动
+      
+      - name: Download files from container
+        run: |
+          curl http://127.0.0.1:35455/yylunbo.m3u -o yylunbo.m3u
+          curl http://127.0.0.1:35455/huyayqk.m3u -o huyayqk.m3u
+          curl http://127.0.0.1:35455/douyuyqk.m3u -o douyuyqk.m3u
+          DATE=`date +%Y-%m-%d`
+          
+      - name: Merge files
+        run: |
+          cat yylunbo.m3u huyayqk.m3u douyuyqk.m3u > merged_file.m3u
+          
+      - name: Commit changes
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add merged_file.txt
+          git commit -m "$(DATE)"
+          git push
