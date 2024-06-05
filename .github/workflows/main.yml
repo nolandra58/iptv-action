@@ -3,7 +3,7 @@ name: get3-iptv
 on:
   workflow_dispatch:
   schedule:
-    - cron: 0 2 * * *
+    - cron: 0 0 * * *
 
 jobs:
   download_and_commit:
@@ -26,11 +26,12 @@ jobs:
           curl http://127.0.0.1:35455/yylunbo.m3u -o yylunbo.m3u
           curl http://127.0.0.1:35455/huyayqk.m3u -o huyayqk.m3u
           curl http://127.0.0.1:35455/douyuyqk.m3u -o douyuyqk.m3u
+          curl https://raw.githubusercontent.com/YueChan/Live/main/IPTV.m3u -o 0-IPTV.m3u
           DATE=`date +%Y-%m-%d`
           
       - name: Merge files
         run: |
-          cat yylunbo.m3u huyayqk.m3u douyuyqk.m3u > merged_file.m3u
+          cat *.m3u > merged_file.m3u
           
       - name: Commit changes
         env:
