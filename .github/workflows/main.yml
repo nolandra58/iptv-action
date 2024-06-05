@@ -31,8 +31,8 @@ jobs:
           
       - name: Merge files
         run: |
-          cat *.m3u > merged_file.m3u
-          
+          cat *.m3u > temp_merged.m3u
+          mv temp_merged.m3u merged_file.m3u          
       - name: Commit changes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
