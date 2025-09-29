@@ -2,8 +2,7 @@ name: get3-iptv
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: 0 0 * * *
+
 
 jobs:
   download_and_commit:
